@@ -5,7 +5,6 @@
 FROM debian:buster-slim
 COPY --from=library/docker:latest /usr/local/bin/docker /usr/bin/docker
 COPY --from=docker/compose:latest /usr/local/bin/docker-compose /usr/bin/docker-compose
-LABEL author="Michael Parker" maintainer="parker@pterodactyl.io"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,6 +29,10 @@ RUN update-locale lang=en_US.UTF-8 \
  && dpkg-reconfigure --frontend noninteractive locales
 
 WORKDIR /home/container
+
+LABEL org.opencontainers.image.source=https://github.com/FavoShane/ptero-in-ptero
+LABEL org.opencontainers.image.description="Wings in Pterodactyl"
+LABEL org.opencontainers.image.licenses=MIT
 
 COPY ./entrypoint.sh /entrypoint.sh
 CMD ["/bin/bash", "/entrypoint.sh"]
